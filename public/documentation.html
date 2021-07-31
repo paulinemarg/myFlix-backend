@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+	<html lang="en" dir="ltr">
+		<head>
+			<meta charset="utf-8">
+			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+			<title>Documentation</title>
+		</head>
+
+	<body>
+		<header>
+			<h1 class="text-center text-muted">Documentation | myFlix-backend</h1>
+		</header>
+		<main>
+			<h2 class="text-success">Objective</h2>
+			<p> This app is created to build the <mark>server-side</mark> component of a “movies” web application.<br>
+					The web application will provide users with access to information about different movies, directors, and genres.<br>
+					Users will be able to sign up, update their personal information, and create a list of their favorite movies.
+			</p>
+			<h2 class="text-success">Design Criteria</h2>
+			<h4 class="text-muted">Technical Requirements</h4>
+			<ul>
+				<li>The API must be a <mark>Node.js</mark> and <mark>Express</mark> application.</li>
+				<li>The API must use <mark>REST</mark> architecture, with URL endpoints corresponding to the data
+					operations listed above</li>
+				<li>The API must use at least three <mark>middleware</mark> modules, such as the body-parser package for
+					reading data from requests and morgan for logging.</li>
+				<li>The API must use a <mark>“package.json”</mark> file.</li>
+				<li>The database must be built using <mark>MongoDB.</mark></li>
+				<li>The business logic must be modeled with <mark>Mongoose.</mark></li>
+				<li>The API must provide movie information in <mark>JSON</mark> format.</li>
+				<li>The JavaScript code must be <mark>error-free.</mark></li>
+				<li>The API must be tested in <mark>Postman.</mark></li>
+				<li>The API must include user authentication and authorization code.</li>
+				<li>The API must include data validation logic./li>
+				<li>The API must meet data security regulations.</li>
+				<li>The API source code must be deployed to a publicly accessible platform like GitHub.</li>
+				<li>The API must be deployed to <mark>Heroku.</mark></li>
+			</ul>
+			<h3 class="text-success">Endpoints for REST API</h3>
+			<table class="table table-responsive table-bordered table-hover">
+				<thead>
+					<tr class="table-success">
+	        	<th scope="col">Business Logic</th>
+	        	<th scope="col">URL</th>
+	        	<th scope="col">HTTP Method</th>
+	        	<th scope="col">Query Parameter</th>
+	        	<th scope="col">Request format</th>
+	        	<th scope="col">Response format</th>
+	      	</tr>
+				</thead>
+				<tbody>
+					<tr>
+		        <td>Welcome page</td>
+		        <td> /</td>
+		        <td>GET</td>
+		        <td>None</td>
+		        <td>None</td>
+		        <td>A page with a welcome message</td>
+		      </tr>
+		      <tr>
+		        <td>Return a list of ALL movies</td>
+		        <td>/movies</td>
+		        <td>GET</td>
+		        <td>None</td>
+		        <td>None</td>
+		        <td>A JSON object holding data about all the movies</td>
+		      </tr>
+					<tr>
+		        <td>Return data about a single movie by title</td>
+		        <td>/movies/[Title]</td>
+		        <td>GET</td>
+		        <td>/movies/:Title</td>
+		        <td>None</td>
+		        <td>A JSON object holding data about a movie. Example:
+						<br>{
+								<br>"_id" : "ObjectId("60f29537b9d1a693d8b45b8a")",
+								<br>"Title": "Inception",
+								<br>"Genre": "ObjectId("60f26593b9d1a693d8b45b7b")",
+								<br>"Director": "ObjectId("60f274b0b9d1a693d8b45b80")",
+								<br>"Stars" : "Leonardo DiCaprio, Elliot Page",
+								<br>"ReleaseYear" : "2010",
+								<br>"Rating" : "8.8/10",
+								<br>"ImagePath" : "https://m.media-amazon...",
+								<br>"Featured" : true
+						<br>}
+						</td>
+					</tr>
+					<tr>
+		        <td>Return a list of ALL genres</td>
+		        <td>/genres</td>
+		        <td>GET</td>
+		        <td>None</td>
+		        <td>None</td>
+		        <td>A JSON object holding data about all the genres</td>
+		      </tr>
+					<tr>
+		        <td>Return data about a genre by name</td>
+		        <td>/genres/[Name]</td>
+		        <td>GET</td>
+		        <td>/genres/:name</td>
+		        <td>None</td>
+		        <td>A JSON object holding data about a genre. Example:
+						<br>{
+		         <br>"_id": "60f26723b9d1a693d8b45b7c",
+		         <br>"Name": "Thriller",
+		         <br>"Description": "Thriller film, also known as suspense film or suspense..."
+						<br>}
+		        </td>
+		      </tr>
+					<tr>
+		        <td>Return a list of ALL directors</td>
+		        <td>/directors</td>
+		        <td>GET</td>
+		        <td>None</td>
+		        <td>None</td>
+		        <td>A JSON object holding data about all the directors</td>
+		      </tr>
+					<tr>
+		        <td>Return data about a director by name</td>
+		        <td>/movies/directors/[Name]</td>
+		        <td>GET</td>
+		        <td>/movies/directors/:Name</td>
+		        <td>None</td>
+		        <td>A JSON object holding data about a director. Example:
+		         <br>{
+		          <br>"_id": "60f274b0b9d1a693d8b45b80",
+		          <br>"Name": "Christopher Nolan",
+		          <br>"Bio": "Christopher Nolan  is a British-American film director...",
+		          <br>"Birthyear": "1970-07-30",
+							<br>"Filmography": ["Memento, Insomnia, The Prestige, Inception"],
+							<br>}
+		      </tr>
+					<tr>
+		        <td>Allow new users to register</td>
+		        <td>/users</td>
+		        <td>POST</td>
+		        <td>None</td>
+		        <td>A JSON object holding data about the registered users. Example:
+					<br>{
+		       <br>"Username: "newuser",
+		       <br>"Password": "newuser123",
+		       <br>"Email": "newuser@gmail.com",
+					 <br>"Birth": "1995-05-05"
+					<br>}
+		       	</td>
+						<td>A JSON object holding data about the user that was registered, inculding an ID. Example:
+						<br>{
+						 <br>"id": "60f345b0b5d2a547d7b35b30",
+		         <br>"Username: "newuser",
+		         <br>"Password": "newuser123",
+		         <br>"Email": "paulinemarg@gmail.com",
+						 <br>"Birth": "1995-05-05"
+						<br>}
+		       	</td>
+				  </tr>
+					<tr>
+		        <td>Allow users to update their username</td>
+		        <td>/users/[Username]</td>
+		        <td>PUT</td>
+		        <td>/users/:Username</td>
+		        <td>A JSON object holding data about the users update. Example:
+						<br>{
+						 <br>"Username: "updatenewuser",
+			       <br>"Password": "newuser123",
+			       <br>"Email": "newuser@gmail.com",
+						 <br>"Birth": "1995-05-05"
+						<br>}
+						</td>
+						<td>A JSON object holding data about the updated user including an ID. Example:
+						<br>{
+						 <br>"id": "60f345b0b5d2a547d7b35b30",
+						 <br>"Username: "updatenewuser",
+			       <br>"Password": "newuser123",
+			       <br>"Email": "newuser@gmail.com",
+			       <br>"Birth": "1995-05-05"
+						<br>}
+						</td>
+					</tr>
+					<tr>
+		        <td>Allow users to add movies to favorites</td>
+		        <td>/users/[Username]/movies/[MovieID]</td>
+		        <td>POST</td>
+		        <td>/users/:username/movies/:MovieID</td>
+		        <td>None</td>
+		        <td>A JSON object holding data about the movie that was added to favorites by the user. Example:
+							<br>{
+								<br>"FavoriteMovies": ["60f29537b9d1a693d8b45b8a"],
+							 	<br>"id": "60f345b0b5d2a547d7b35b30",
+							 	<br>"Username: "updatenewuser",
+				       	<br>"Password": "newuser123",
+				       	<br>"Email": "newuser@gmail.com",
+				       	<br>"Birth": "1995-05-05"
+							<br>}
+						</td>
+					</tr>
+					<tr>
+		        <td>Allow users to remove movies from list of favorites</td>
+		        <td>/users/[Username]/movies/[MovieID]</td>
+		        <td>DELETE</td>
+		        <td>/users/:username/movies/:MovieID</td>
+		        <td>None</td>
+		        <td>A JSON object holding data about the movie that was removed from the user's favorites. Example:
+							<br>{
+								<br>"FavoriteMovies": [],
+							 	<br>"id": "60f345b0b5d2a547d7b35b30",
+							 	<br>"Username: "updatenewuser",
+				       	<br>"Password": "newuser123",
+				       	<br>"Email": "newuser@gmail.com",
+				       	<br>"Birth": "1995-05-05"
+							<br>}
+						</td>
+					</tr>
+					<tr>
+		        <td>Allow existing users to deregister</td>
+		        <td>/users/[Username]</td>
+		        <td>DELETE</td>
+		        <td>/users/:Username</td>
+		        <td>None</td>
+		        <td>A text message indicating the user was successfully deregistered</td>
+		      </tr>
+				</tbody>
+			</table>
+			<table class="table table-responsive table-hover">
+				<tr class="table-success">
+					<th scope="col">Made with: Node.js, JavaScript, Express, MongoDB & Mongoose</th>
+					<th scope="col">Hosted on Heroku:
+					<a href="https://backend-myFlix.herokuapp.com">myFlix</a>
+					</th>
+				</tr>
+			</table>
+		</main>
+	</body>
+</html>
