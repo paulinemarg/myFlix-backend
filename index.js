@@ -1,14 +1,19 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const morgan = require('morgan');
-const mongoose = require('mongoose');
-const Models = require('./models.js');
-const app = express();
+const mongoose = require('mongoose'),
+  Models = require('./models.js'),
+  express = require('express'),
+  morgan = require('morgan'),
+  path = require('path'),
+  bodyParser = require('body-parser');
+
+  app = express(),
+  {
+    check,
+    validationResult
+  } = require('express-validator');
+
 const cors = require('cors');
-const { check, validationResult } = require('express-validator');
 
-const allowedOrigins = ['http://localhost:8080','https://backend-myflix.herokuapp.com/', 'http://localhost:1234'];
-
+let allowedOrigins = ['http://localhost:8080','https://backend-myflix.herokuapp.com/'];
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin) return callback(null, true);
@@ -25,6 +30,7 @@ const Users = Models.User;
 const Genres = Models.Genre;
 const Directors = Models.Director;
 
+
 app.use(morgan('common'));
 app.use(express.static('public'));
 app.use(bodyParser.json());
@@ -32,7 +38,6 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-let auth = require('./auth')(app);
 const passport = require('passport');
 require('./passport');
 
