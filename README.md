@@ -46,4 +46,4 @@ The API:
 * MongoDB
 * Mongoose
 
-**Hosted on Heroku** https://backend-myflix.herokuapp.com
+**Hosted on Heroku** [myFlix](https://backend-myflix.herokuapp.com)
