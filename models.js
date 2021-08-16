@@ -38,7 +38,8 @@ let directorSchema = mongoose.Schema({
   Name: {type: String, required: true},
   Bio: {type: String, required: true},
   Birthyear: Date,
-  Filmography: [String]
+  Filmography: [String],
+  Image: String
 });
 
 let Movie = mongoose.model('Movie', movieSchema);
