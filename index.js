@@ -48,12 +48,23 @@ mongoose.connect(process.env.CONNECTION_URI, {
 
 const auth = require('./auth')(app);
 
+/**
+ * Get the welcome page
+ * @method GET
+ * @param {string} endpoint - endpoint to load the welcome page. "url/"
+ * @returns {object} - returns the welcome page
+ */
 app.get('/', (req, res) => {
   res.send('Welcome to myFlix! Your World of Movie Awaits!');
 });
 
 //------------------movie requests---------------//
-//get all movies
+/**
+ * Get all movies
+ * @method GET
+ * @param {string} endpoint - endpoint to fetch movies. "url/movies"
+ * @returns {object} - returns the movie object
+ */
 app.get('/movies', passport.authenticate('jwt', { session: false }), function(req, res) {
   Movies.find().populate('Director').populate('Genre')
     .then((movies) => {
@@ -63,8 +74,13 @@ app.get('/movies', passport.authenticate('jwt', { session: false }), function(re
       res.status(500).sned('Error: ' + err);
     });
 });
-
-//get movie by title
+/**
+ * Get movies by title
+ * @method GET
+ * @param {string} endpoint - endpoint - fetch movies by title
+ * @param {string} Title - is used to get specific movie "url/movies/:Title"
+ * @returns {object} - returns the movie with specific title
+ */
 app.get('/movies/:Title', passport.authenticate('jwt', {
   session: false
 }), (req, res) => {
@@ -78,8 +94,13 @@ app.get('/movies/:Title', passport.authenticate('jwt', {
       res.status(500).send('Error: ' + err);
     })
 });
-
-//add movie to users favorite list
+/**
+ * Add movie to favorites
+ * @method POST
+ * @param {string} endpoint - endpoint to add movies to favorites
+ * @param {string} Title, Username - both are required
+ * @returns {string} - returns success/error message
+ */
 app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', {
   session: false
 }), (req, res) => {
@@ -101,8 +122,13 @@ app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', {
       }
     });
 });
-
-//delete movie from users favorite list
+/**
+ * Delete movie from favorites
+ * @method DELETE
+ * @param {string} endpoint - endpoint to remove movies from favorites
+ * @param {string} Title Username - both are required
+ * @returns {string} - returns success/error message
+ */
 app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', {
   session: false
 }), (req, res) => {
@@ -126,7 +152,12 @@ app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', {
 });
 
 //----------------genre requests--------------------//
-//get all genres
+/**
+ * Get all genres
+ * @method GET
+ * @param {string} endpoint - endpoint to fetch genres. "url/genres"
+ * @returns {object} - returns the genre object
+ */
 app.get('/genres', passport.authenticate('jwt', {
   session: false
 }), function(req, res) {
@@ -138,8 +169,13 @@ app.get('/genres', passport.authenticate('jwt', {
       res.status(500).sned('Error: ' + err);
     });
 });
-
-//get a single genre by name
+/**
+ * Get genre by name
+ * @method GET
+ * @param {string} endpoint - endpoint - fetch genre by name
+ * @param {string} Name - is used to get specific genre "url/genres/:Name"
+ * @returns {object} - returns a specific genre
+ */
 app.get('/genres/:Name', passport.authenticate('jwt', {
   session: false
 }), (req, res) => {
@@ -155,7 +191,12 @@ app.get('/genres/:Name', passport.authenticate('jwt', {
 });
 
 //----------------directors requests--------------------//
-//get all directors
+/**
+ * Get all directors
+ * @method GET
+ * @param {string} endpoint - endpoint to fetch directors. "url/directors"
+ * @returns {object} - returns the directors object
+ */
 app.get('/directors', passport.authenticate('jwt', {
   session: false
 }), function(req, res) {
@@ -167,8 +208,13 @@ app.get('/directors', passport.authenticate('jwt', {
       res.status(500).sned('Error: ' + err);
     });
 });
-
-//get a single director by name
+/**
+ * Get director by name
+ * @method GET
+ * @param {string} endpoint - endpoint - fetch director by name
+ * @param {string} Name - is used to get specific director "url/directors/:Name"
+ * @returns {object} - returns a specific director
+ */
 app.get('/directors/:Name', passport.authenticate('jwt', {
   session: false
 }), (req, res) => {
@@ -184,7 +230,12 @@ app.get('/directors/:Name', passport.authenticate('jwt', {
 });
 
 //------------------user requests---------------
-//gett all users
+/**
+ * Get all users
+ * @method GET
+ * @param {string} endpoint - endpoint to fetch users. "url/users"
+ * @returns {object} - returns the users object
+ */
 app.get('/users', passport.authenticate('jwt', {
   session: false
 }), function(req, res) {
@@ -196,8 +247,13 @@ app.get('/users', passport.authenticate('jwt', {
       res.status(500).send('Error: ' + err);
     });
 });
-
-//get user by username
+/**
+ * Get user by username
+ * @method GET
+ * @param {string} endpoint - endpoint - fetch user by username
+ * @param {string} Username - is used to get specific user "url/users/:Username"
+ * @returns {object} - returns a specific user
+ */
 app.get('/users/:Username', passport.authenticate('jwt', {
   session: false
 }), (req, res) => {
@@ -211,8 +267,16 @@ app.get('/users/:Username', passport.authenticate('jwt', {
       res.status(500).send('Error: ' + err);
     });
 });
-
-//allow a new user to register
+/**
+ * Add user
+ * @method POST
+ * @param {string} endpoint - endpoint to add user. "url/users"
+ * @param {string} Username - choosen by user
+ * @param {string} Password - user's password
+ * @param {string} Email - user's e-mail adress
+ * @param {string} Birthday - user's birthday
+ * @returns {object} - new user
+ */
 app.post('/users',
   [
     check('Username', 'Username is required!').isLength({
@@ -239,12 +303,10 @@ app.post('/users',
         } else {
           Users
             .create({
-              FirstName: req.body.FirstName,
-              LastName: req.body.LastName,
               Username: req.body.Username,
               Password: hashedPasswod,
               Email: req.body.Email,
-              Birth: req.body.Birth
+              Birthday: req.body.Birthday
             }).then((user) => {
               res.status(201).json(user)
             })
@@ -258,8 +320,16 @@ app.post('/users',
         res.status(500).send('Error: ' + error);
       });
   });
-
-//update user by username
+  /**
+   * Update user by username
+   * @method PUT
+   * @param {string} endpoint - endpoint to add user. "url/users/:Usename"
+   * @param {string} Username - required
+   * @param {string} Password - user's new password
+   * @param {string} Email - user's new e-mail adress
+   * @param {string} Birthday - user's new birthday
+   * @returns {string} - returns success/error message
+   */
 app.put('/users/:Username',
   [
     check('Username', 'Username is required!').isLength({
@@ -282,12 +352,10 @@ app.put('/users/:Username',
         Username: req.params.Username
       }, {
         $set: {
-          FirstName: req.body.FirstName,
-          LastName: req.body.LastName,
           Username: req.body.Username,
           Password: req.body.Password,
           Email: req.body.Email,
-          Birth: req.body.Birth
+          Birthday: req.body.Birthday
         }
       }, {
         new: true
@@ -301,8 +369,13 @@ app.put('/users/:Username',
         }
       });
   });
-
-//delete user by username
+  /**
+   * Delete user by username
+   * @method DELETE
+   * @param {string} endpoint - endpoint - delete user by username
+   * @param {string} Username - is used to delete specific user "url/users/:Username"
+   * @returns {string} success/error message
+   */
 app.delete('/users/:Username', passport.authenticate('jwt', {
   session: false
 }), (req, res) => {
