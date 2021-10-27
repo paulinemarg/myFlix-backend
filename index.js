@@ -95,6 +95,26 @@ app.get('/movies/:Title', passport.authenticate('jwt', {
     })
 });
 /**
+ * Get list of favorite movies
+ * @method GET
+ * @param {string} Username - endpoint to fetch users favorites
+ * @returns {object} - containing favoritemovies array of user
+ */
+// Gets the list of favorite movies
+ app.get('/users/:Username/movies',
+   passport.authenticate('jwt', { session: false }),
+   (req, res) => {
+     Users.findOne({ Username: req.params.Username })
+       .then((user) => {
+         res.json(user);
+       })
+       .catch((err) => {
+         console.error(err);
+         res.status(500).send('Error: ' + err);
+       });
+   }
+ );
+/**
  * Add movie to favorites
  * @method POST
  * @param {string} endpoint - endpoint to add movies to favorites
