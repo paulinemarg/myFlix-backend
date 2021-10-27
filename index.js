@@ -13,18 +13,7 @@ const mongoose = require('mongoose'),
 
 const cors = require('cors');
 
-let allowedOrigins = [
-  'http://localhost:8080',
-  'https://backend-myflix.herokuapp.com/',
-  'http://localhost:1234',
-  'https://paulinemarg-myflix.netlify.app',
-  'http://localhost:4200',
-  'https://paulinemarg.github.io',
-  'https://paulinemarg.github.io/'
-  'https://paulinemarg.github.io/myFlix-Angular-client',
-  'https://paulinemarg.github.io/myFlix-Angular-client/',
-];
-
+let allowedOrigins = ['http://localhost:8080','https://backend-myflix.herokuapp.com/', 'http://localhost:1234', 'https://paulinemarg-myflix.netlify.app', 'http://localhost:4200'];
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin) return callback(null, true);
@@ -75,7 +64,6 @@ app.get('/', (req, res) => {
  * @method GET
  * @param {string} endpoint - endpoint to fetch movies. "url/movies"
  * @returns {object} - returns the movie object
-  * @requires authentication JWT
  */
 app.get('/movies', passport.authenticate('jwt', { session: false }), function(req, res) {
   Movies.find().populate('Director').populate('Genre')
@@ -92,7 +80,6 @@ app.get('/movies', passport.authenticate('jwt', { session: false }), function(re
  * @param {string} endpoint - endpoint - fetch movies by title
  * @param {string} Title - is used to get specific movie "url/movies/:Title"
  * @returns {object} - returns the movie with specific title
- * @requires authentication JWT
  */
 app.get('/movies/:Title', passport.authenticate('jwt', {
   session: false
@@ -108,33 +95,11 @@ app.get('/movies/:Title', passport.authenticate('jwt', {
     })
 });
 /**
- * Get list of favorite movies
- * @method GET
- * @param {string} Username - endpoint to fetch users favorites
- * @returns {object} - containing favoritemovies array of user
- * @requires authentication JWT
- */
-// Gets the list of favorite movies
- app.get('/users/:Username/movies',
-   passport.authenticate('jwt', { session: false }),
-   (req, res) => {
-     Users.findOne({ Username: req.params.Username })
-       .then((user) => {
-         res.json(user);
-       })
-       .catch((err) => {
-         console.error(err);
-         res.status(500).send('Error: ' + err);
-       });
-   }
- );
-/**
  * Add movie to favorites
  * @method POST
  * @param {string} endpoint - endpoint to add movies to favorites
  * @param {string} Title, Username - both are required
  * @returns {string} - returns success/error message
- * @requires authentication JWT
  */
 app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', {
   session: false
@@ -163,7 +128,6 @@ app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', {
  * @param {string} endpoint - endpoint to remove movies from favorites
  * @param {string} Title Username - both are required
  * @returns {string} - returns success/error message
- * @requires authentication JWT
  */
 app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', {
   session: false
@@ -193,7 +157,6 @@ app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', {
  * @method GET
  * @param {string} endpoint - endpoint to fetch genres. "url/genres"
  * @returns {object} - returns the genre object
- * @requires authentication JWT
  */
 app.get('/genres', passport.authenticate('jwt', {
   session: false
@@ -212,7 +175,6 @@ app.get('/genres', passport.authenticate('jwt', {
  * @param {string} endpoint - endpoint - fetch genre by name
  * @param {string} Name - is used to get specific genre "url/genres/:Name"
  * @returns {object} - returns a specific genre
- * @requires authentication JWT
  */
 app.get('/genres/:Name', passport.authenticate('jwt', {
   session: false
@@ -291,7 +253,6 @@ app.get('/users', passport.authenticate('jwt', {
  * @param {string} endpoint - endpoint - fetch user by username
  * @param {string} Username - is used to get specific user "url/users/:Username"
  * @returns {object} - returns a specific user
- * @requires authentication JWT
  */
 app.get('/users/:Username', passport.authenticate('jwt', {
   session: false
@@ -315,7 +276,6 @@ app.get('/users/:Username', passport.authenticate('jwt', {
  * @param {string} Email - user's e-mail adress
  * @param {string} Birthday - user's birthday
  * @returns {object} - new user
- * @requires auth no authentication - public
  */
 app.post('/users',
   [
@@ -360,17 +320,16 @@ app.post('/users',
         res.status(500).send('Error: ' + error);
       });
   });
-/**
-  * Update user by username
-  * @method PUT
-  * @param {string} endpoint - endpoint to add user. "url/users/:Usename"
-  * @param {string} Username - required
-  * @param {string} Password - user's new password
-  * @param {string} Email - user's new e-mail adress
-  * @param {string} Birthday - user's new birthday
-  * @returns {string} - returns success/error message
-  * @requires authentication JWT
-  */
+  /**
+   * Update user by username
+   * @method PUT
+   * @param {string} endpoint - endpoint to add user. "url/users/:Usename"
+   * @param {string} Username - required
+   * @param {string} Password - user's new password
+   * @param {string} Email - user's new e-mail adress
+   * @param {string} Birthday - user's new birthday
+   * @returns {string} - returns success/error message
+   */
 app.put('/users/:Username',
   [
     check('Username', 'Username is required!').isLength({
@@ -410,14 +369,13 @@ app.put('/users/:Username',
         }
       });
   });
-/**
-  * Delete user by username
-  * @method DELETE
-  * @param {string} endpoint - endpoint - delete user by username
-  * @param {string} Username - is used to delete specific user "url/users/:Username"
-  * @returns {string} success/error message
-  * @requires authentication JWT
-  */
+  /**
+   * Delete user by username
+   * @method DELETE
+   * @param {string} endpoint - endpoint - delete user by username
+   * @param {string} Username - is used to delete specific user "url/users/:Username"
+   * @returns {string} success/error message
+   */
 app.delete('/users/:Username', passport.authenticate('jwt', {
   session: false
 }), (req, res) => {
