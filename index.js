@@ -13,7 +13,7 @@ const mongoose = require('mongoose'),
 
 const cors = require('cors');
 
-let allowedOrigins = ['http://localhost:8080','https://backend-myflix.herokuapp.com/', 'http://localhost:1234', 'https://paulinemarg-myflix.netlify.app', 'http://localhost:4200', 'https://paulinemarg.github.io/myFlix-Angular-client/', 'https://paulinemarg.github.io/', 'https://paulinemarg.github.io'];
+let allowedOrigins = ['http://localhost:8080','https://backend-myflix.herokuapp.com/', 'http://localhost:1234', 'https://paulinemarg-myflix.netlify.app', 'http://localhost:4200', 'https://paulinemarg.github.io/myFlix-Angular-client/', 'https://paulinemarg.github.io/myFlix-Angular-client', 'https://paulinemarg.github.io/', 'https://paulinemarg.github.io'];
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin) return callback(null, true);
