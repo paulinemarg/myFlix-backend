@@ -65,7 +65,7 @@ app.get('/', (req, res) => {
  * @param {string} endpoint - endpoint to fetch movies. "url/movies"
  * @returns {object} - returns the movie object
  */
-app.get('/movies', function(req, res) {
+app.get('/movies', passport.authenticate('jwt', { session: false }), function(req, res) {
   Movies.find().populate('Director').populate('Genre')
     .then((movies) => {
       res.status(200).json(movies);
