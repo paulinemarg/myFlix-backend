@@ -65,9 +65,7 @@ app.get('/', (req, res) => {
  * @param {string} endpoint - endpoint to fetch movies. "url/movies"
  * @returns {object} - returns the movie object
  */
-app.get('/movies',
-//passport.authenticate('jwt', { session: false }),
-function(req, res) {
+app.get('/movies', passport.authenticate('jwt', { session: false }), function(req, res) {
   Movies.find().populate('Director').populate('Genre')
     .then((movies) => {
       res.status(200).json(movies);
@@ -83,9 +81,9 @@ function(req, res) {
  * @param {string} Title - is used to get specific movie "url/movies/:Title"
  * @returns {object} - returns the movie with specific title
  */
-app.get('/movies/:Title',
-//passport.authenticate('jwt', { session: false }),
-(req, res) => {
+app.get('/movies/:Title', passport.authenticate('jwt', {
+  session: false
+}), (req, res) => {
   Movies.findOne({
       Title: req.params.Title
     })
@@ -104,7 +102,7 @@ app.get('/movies/:Title',
  */
 // Gets the list of favorite movies
  app.get('/users/:Username/movies',
-   //passport.authenticate('jwt', { session: false }),
+   passport.authenticate('jwt', { session: false }),
    (req, res) => {
      Users.findOne({ Username: req.params.Username })
        .then((user) => {
@@ -123,9 +121,9 @@ app.get('/movies/:Title',
  * @param {string} Title, Username - both are required
  * @returns {string} - returns success/error message
  */
-app.post('/users/:Username/movies/:MovieID',
-//passport.authenticate('jwt', { session: false }),
-(req, res) => {
+app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', {
+  session: false
+}), (req, res) => {
   Users.findOneAndUpdate({
       Username: req.params.Username
     }, {
@@ -151,8 +149,9 @@ app.post('/users/:Username/movies/:MovieID',
  * @param {string} Title Username - both are required
  * @returns {string} - returns success/error message
  */
-app.delete('/users/:Username/movies/:MovieID',
-//passport.authenticate('jwt', { session: false }), (req, res) => {
+app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', {
+  session: false
+}), (req, res) => {
   Users.findOneAndUpdate({
       Username: req.params.Username
     }, {
@@ -179,8 +178,9 @@ app.delete('/users/:Username/movies/:MovieID',
  * @param {string} endpoint - endpoint to fetch genres. "url/genres"
  * @returns {object} - returns the genre object
  */
-app.get('/genres',
-//passport.authenticate('jwt', { session: false }), function(req, res) {
+app.get('/genres', passport.authenticate('jwt', {
+  session: false
+}), function(req, res) {
   Genres.find()
     .then((genre) => {
       res.status(200).json(genre);
@@ -196,9 +196,9 @@ app.get('/genres',
  * @param {string} Name - is used to get specific genre "url/genres/:Name"
  * @returns {object} - returns a specific genre
  */
-app.get('/genres/:Name',
-//passport.authenticate('jwt', { session: false }),
-(req, res) => {
+app.get('/genres/:Name', passport.authenticate('jwt', {
+  session: false
+}), (req, res) => {
   Genres.findOne({
       Name: req.params.Name
     })
@@ -217,9 +217,9 @@ app.get('/genres/:Name',
  * @param {string} endpoint - endpoint to fetch directors. "url/directors"
  * @returns {object} - returns the directors object
  */
-app.get('/directors',
-//passport.authenticate('jwt', { session: false }),
-function(req, res) {
+app.get('/directors', passport.authenticate('jwt', {
+  session: false
+}), function(req, res) {
   Directors.find()
     .then((director) => {
       res.status(200).json(director);
@@ -235,9 +235,9 @@ function(req, res) {
  * @param {string} Name - is used to get specific director "url/directors/:Name"
  * @returns {object} - returns a specific director
  */
-app.get('/directors/:Name',
-//passport.authenticate('jwt', { session: false }),
-(req, res) => {
+app.get('/directors/:Name', passport.authenticate('jwt', {
+  session: false
+}), (req, res) => {
   Directors.findOne({
       Name: req.params.Name
     })
@@ -256,8 +256,9 @@ app.get('/directors/:Name',
  * @param {string} endpoint - endpoint to fetch users. "url/users"
  * @returns {object} - returns the users object
  */
-app.get('/users',
-//passport.authenticate('jwt', { session: false }), function(req, res) {
+app.get('/users', passport.authenticate('jwt', {
+  session: false
+}), function(req, res) {
   Users.find()
     .then((users) => {
       res.status(201).json(users);
@@ -273,9 +274,9 @@ app.get('/users',
  * @param {string} Username - is used to get specific user "url/users/:Username"
  * @returns {object} - returns a specific user
  */
-app.get('/users/:Username',
-//passport.authenticate('jwt', { session: false }),
-(req, res) => {
+app.get('/users/:Username', passport.authenticate('jwt', {
+  session: false
+}), (req, res) => {
   Users.findOne({
       Username: req.params.Username
     })
@@ -358,8 +359,9 @@ app.put('/users/:Username',
     check('Password', 'Password is required!').not().isEmpty(),
     check('Email', 'Email adress is not valid!').isEmail()
   ],
-  //passport.authenticate('jwt', { session: false }),
-  (req, res) => {
+  passport.authenticate('jwt', {
+    session: false
+  }), (req, res) => {
     let errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).json({
@@ -394,9 +396,9 @@ app.put('/users/:Username',
    * @param {string} Username - is used to delete specific user "url/users/:Username"
    * @returns {string} success/error message
    */
-app.delete('/users/:Username',
-//passport.authenticate('jwt', { session: false }),
-(req, res) => {
+app.delete('/users/:Username', passport.authenticate('jwt', {
+  session: false
+}), (req, res) => {
   Users.findOneAndDelete({
     Username: req.params.Username
   }).then((user) => {
