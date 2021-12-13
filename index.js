@@ -66,7 +66,7 @@ app.get('/', (req, res) => {
  * @returns {object} - returns the movie object
  */
 app.get('/movies',
-  //passport.authenticate('jwt', { session: false }),
+  passport.authenticate('jwt', { session: false }),
   function (req, res) {
     Movies.find().populate('Director').populate('Genre')
       .then((movies) => {
@@ -84,7 +84,7 @@ app.get('/movies',
  * @returns {object} - returns the movie with specific title
  */
 app.get('/movies/:Title',
-  //passport.authenticate('jwt', { session: false }),
+  passport.authenticate('jwt', { session: false }),
   (req, res) => {
     Movies.findOne({
       Title: req.params.Title
@@ -104,7 +104,7 @@ app.get('/movies/:Title',
  */
 // Gets the list of favorite movies
 app.get('/users/:Username/movies',
-  //passport.authenticate('jwt', { session: false }),
+  passport.authenticate('jwt', { session: false }),
   (req, res) => {
     Users.findOne({ Username: req.params.Username })
       .then((user) => {
@@ -124,7 +124,7 @@ app.get('/users/:Username/movies',
  * @returns {string} - returns success/error message
  */
 app.post('/users/:Username/movies/:MovieID',
-  //passport.authenticate('jwt', { session: false }),
+  passport.authenticate('jwt', { session: false }),
   (req, res) => {
     Users.findOneAndUpdate({
       Username: req.params.Username
@@ -152,7 +152,7 @@ app.post('/users/:Username/movies/:MovieID',
  * @returns {string} - returns success/error message
  */
 app.delete('/users/:Username/movies/:MovieID',
-  //passport.authenticate('jwt', { session: false }), 
+  passport.authenticate('jwt', { session: false }),
   (req, res) => {
     Users.findOneAndUpdate({
       Username: req.params.Username
@@ -181,7 +181,7 @@ app.delete('/users/:Username/movies/:MovieID',
  * @returns {object} - returns the genre object
  */
 app.get('/genres',
-  //passport.authenticate('jwt', { session: false }), 
+  passport.authenticate('jwt', { session: false }),
   function (req, res) {
     Genres.find()
       .then((genre) => {
@@ -199,7 +199,7 @@ app.get('/genres',
  * @returns {object} - returns a specific genre
  */
 app.get('/genres/:Name',
-  //passport.authenticate('jwt', { session: false }),
+  passport.authenticate('jwt', { session: false }),
   (req, res) => {
     Genres.findOne({
       Name: req.params.Name
@@ -220,7 +220,7 @@ app.get('/genres/:Name',
  * @returns {object} - returns the directors object
  */
 app.get('/directors',
-  //passport.authenticate('jwt', { session: false }),
+  passport.authenticate('jwt', { session: false }),
   function (req, res) {
     Directors.find()
       .then((director) => {
@@ -238,7 +238,7 @@ app.get('/directors',
  * @returns {object} - returns a specific director
  */
 app.get('/directors/:Name',
-  //passport.authenticate('jwt', { session: false }),
+  passport.authenticate('jwt', { session: false }),
   (req, res) => {
     Directors.findOne({
       Name: req.params.Name
@@ -259,7 +259,7 @@ app.get('/directors/:Name',
  * @returns {object} - returns the users object
  */
 app.get('/users',
-  //passport.authenticate('jwt', { session: false }), 
+  passport.authenticate('jwt', { session: false }),
   function (req, res) {
     Users.find()
       .then((users) => {
@@ -277,7 +277,7 @@ app.get('/users',
  * @returns {object} - returns a specific user
  */
 app.get('/users/:Username',
-  //passport.authenticate('jwt', { session: false }),
+  passport.authenticate('jwt', { session: false }),
   (req, res) => {
     Users.findOne({
       Username: req.params.Username
@@ -361,7 +361,7 @@ app.put('/users/:Username',
     check('Password', 'Password is required!').not().isEmpty(),
     check('Email', 'Email adress is not valid!').isEmail()
   ],
-  //passport.authenticate('jwt', { session: false }),
+  passport.authenticate('jwt', { session: false }),
   (req, res) => {
     let errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -398,7 +398,7 @@ app.put('/users/:Username',
  * @returns {string} success/error message
  */
 app.delete('/users/:Username',
-  //passport.authenticate('jwt', { session: false }),
+  passport.authenticate('jwt', { session: false }),
   (req, res) => {
     Users.findOneAndDelete({
       Username: req.params.Username
