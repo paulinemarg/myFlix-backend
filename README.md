@@ -1,5 +1,7 @@
 <h1 align="center">MyFlix-backend</h1>
 
+<img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/paulinemarg/myFlix-backend"> <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/paulinemarg/myFlix-backend?color=green"> <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/paulinemarg/myFlix-backend?color=yellow"> <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/paulinemarg/myFlix-backend?style=plastic">
+
 # About
 
 This is the server-side component of [myFlix-client](https://github.com/paulinemarg/myFlix-client). The web application provide users with access to information about different movies, directors, and genres. 
