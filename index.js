@@ -188,7 +188,7 @@ app.get('/genres',
         res.status(200).json(genre);
       }).catch((err) => {
         console.error(err);
-        res.status(500).sned('Error: ' + err);
+        res.status(500).send('Error: ' + err);
       });
   });
 /**
