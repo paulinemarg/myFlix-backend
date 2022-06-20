@@ -227,7 +227,7 @@ app.get('/directors',
         res.status(200).json(director);
       }).catch((err) => {
         console.error(err);
-        res.status(500).sned('Error: ' + err);
+        res.status(500).send('Error: ' + err);
       });
   });
 /**
