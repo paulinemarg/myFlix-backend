@@ -4,7 +4,7 @@
 
 # About
 
-This is the server-side component of [myFlix-client](https://github.com/paulinemarg/myFlix-client). The web application provide users with access to information about different movies, directors, and genres. 
+This is the server-side component of a movie web app called [myFlix](https://github.com/paulinemarg/myFlix-client). The web application provide users with access to information about different movies, directors, and genres. 
 Users will be able to sign up, update their personal information, and create a list of their favorite movies.
 
 # API Documentation
